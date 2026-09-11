@@ -635,7 +635,7 @@ async function init() {
       minzoom: z0, maxzoom: z1,
       filter: ['all', bandC(b), ['has', 'line']],
       layout: {
-        'text-field': ['get', 'line'],
+        'text-field': ['coalesce', ['get', 'lbl'], ['get', 'line']],
         'text-font': [NARROW_BOLD],
         // × sc: crowded complexes arrive pre-shrunk from the pipeline — the
         // per-feature constant keeps layout and render in agreement (the same
@@ -1870,7 +1870,7 @@ async function init() {
           west = Math.min(west, c[0]); east = Math.max(east, c[0]);
           south = Math.min(south, c[1]); north = Math.max(north, c[1]);
         }
-        feats.push({ type: 'Feature', properties: { kind: 'leg', color: leg.color, line: leg.line }, geometry: { type: 'LineString', coordinates: line } });
+        feats.push({ type: 'Feature', properties: { kind: 'leg', color: leg.color, line: disp(leg.line) }, geometry: { type: 'LineString', coordinates: line } });
         // intermediate stops of the ride (strictly between boarding and alighting)
         for (const [name, pr] of leg.rec.pos) {
           if (pr.at > leg.a.at + 1 && pr.at < leg.b.at - 1) {
@@ -1912,7 +1912,7 @@ async function init() {
       opts.forEach((o, i) => {
         const li = document.createElement('li');
         const parts = o.legs.map((l, li) => {
-          const all = li === 0 && o.alt1 ? [l.line, ...o.alt1] : [l.line];
+          const all = (li === 0 && o.alt1 ? [l.line, ...o.alt1] : [l.line]).map(disp);
           const label = all.slice(0, 5).join(' / ') + (all.length > 5 ? ' …' : '');
           const tip = all.length > 5 ? ` title="${esc2(all.join(' / '))}"` : '';
           return `<span class="jl" style="background:${esc2(l.color)}"${tip}>${esc2(label)}</span> ${esc2(l.from)} &rarr; ${esc2(l.to)}`;
