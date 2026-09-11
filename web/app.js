@@ -228,7 +228,7 @@ async function init() {
   const CATS = [['bus', 'Buses'], ['tram', 'Trams'], ['metro', 'Trains']];
   const catOf = (l) => (l.mode === 'tram' && (/^U[1-6]$/.test(l.line) || isTrain(l)) ? 'metro' : l.mode);
   const chipHtml = (l) => {
-    const hs = (l.dirs || []).map((d) => d.headsign).filter(Boolean);
+    const hs = [...new Set((l.dirs || []).map((d) => d.headsign).filter(Boolean))];
     const tip = hs.length ? `${disp(l.line) !== l.line ? l.line + ' — ' : ''}${hs.join(' ↔ ')}` : '';
     return `<button class="chip" data-line="${esc(l.line)}"${tip ? ` title="${esc(tip)}"` : ''} `
       + `style="background:${esc(l.color)}">${esc(disp(l.line))}</button>`;
