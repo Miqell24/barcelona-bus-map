@@ -8,7 +8,7 @@ geometry.
 
 ## Live
 
-**https://miqell24.github.io/barcelona-bus-map/** — GitHub Pages from `main:/docs`. Local build on port 8189 (`npm run serve`).
+**https://agcghub.github.io/barcelona-bus-map/** — GitHub Pages from `main:/docs`. Local build on port 8189 (`npm run serve`).
 
 ## One feed, and it is not a Barcelona feed
 
